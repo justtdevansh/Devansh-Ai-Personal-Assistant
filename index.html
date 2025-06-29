@@ -1,0 +1,2241 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eDiplomat - Premium Global Collaboration Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+
+--primary-gold: #FFD700;
+--dark-gold: #B8860B;
+--rich-black: #0A0A0A;
+--deep-black: #000000;
+--soft-white: #F8F8F8;
+--accent-gold: #FFA500;
+--shadow-gold: rgba(255, 215, 0, 0.3);
+--gradient-gold: linear-gradient(135deg, #FFD700, #FFA500, #FF8C00);
+--gradient-black: linear-gradient(135deg, #1a1a1a, #0a0a0a, #000000);
+}
+
+[data-theme="dark"] {
+--primary-gold: #FFD700;
+--dark-gold: #FFA500;
+--rich-black: #F8F8F8;
+--deep-black: #FFFFFF;
+--soft-white: #0A0A0A;
+--accent-gold: #FFD700;
+--shadow-gold: rgba(255, 215, 0, 0.5);
+--gradient-gold: linear-gradient(135deg, #FFD700, #FFA500, #FF8C00);
+--gradient-black: linear-gradient(135deg, #f8f8f8, #e0e0e0, #d0d0d0);
+}
+
+body {
+font-family: 'Arial', sans-serif;
+background: var(--gradient-black);
+color: var(--rich-black);
+overflow-x: hidden;
+transition: all 0.5s ease;
+}
+
+/* 3D Animations */
+@keyframes rotate3d {
+0% { transform: rotateY(0deg) rotateX(0deg); }
+25% { transform: rotateY(90deg) rotateX(10deg); }
+50% { transform: rotateY(180deg) rotateX(0deg); }
+75% { transform: rotateY(270deg) rotateX(-10deg); }
+100% { transform: rotateY(360deg) rotateX(0deg); }
+}
+
+@keyframes float3d {
+0%, 100% { transform: translateY(0px) rotateX(0deg); }
+50% { transform: translateY(-20px) rotateX(5deg); }
+}
+
+@keyframes pulse3d {
+0% { transform: scale(1) rotateZ(0deg); box-shadow: 0 0 0 0 var(--shadow-gold); }
+50% { transform: scale(1.05) rotateZ(2deg); box-shadow: 0 0 0 20px rgba(255,215,0,0); }
+100% { transform: scale(1) rotateZ(0deg); box-shadow: 0 0 0 0 rgba(255,215,0,0); }
+}
+
+@keyframes slideIn3d {
+0% { transform: translateX(-100%) rotateY(-90deg); opacity: 0; }
+100% { transform: translateX(0) rotateY(0deg); opacity: 1; }
+}
+
+@keyframes glow {
+0%, 100% { box-shadow: 0 0 20px var(--shadow-gold), 0 0 40px var(--shadow-gold); }
+50% { box-shadow: 0 0 40px var(--shadow-gold), 0 0 80px var(--shadow-gold); }
+}
+
+/* Header with 3D effects */
+.header {
+background: var(--gradient-black);
+backdrop-filter: blur(20px);
+border-bottom: 2px solid var(--primary-gold);
+position: sticky;
+top: 0;
+z-index: 1000;
+transform-style: preserve-3d;
+animation: slideIn3d 1s ease-out;
+}
+
+.header-content {
+max-width: 1400px;
+margin: 0 auto;
+padding: 1rem 2rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.logo-section {
+display: flex;
+align-items: center;
+gap: 1rem;
+animation: float3d 4s ease-in-out infinite;
+}
+
+.logo {
+width: 80px;
+height: 80px;
+background: var(--gradient-gold);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 2rem;
+font-weight: bold;
+color: var(--deep-black);
+transform-style: preserve-3d;
+animation: rotate3d 8s linear infinite;
+box-shadow: 0 10px 30px var(--shadow-gold);
+}
+
+.logo-text h1 {
+font-size: 2.5rem;
+background: var(--gradient-gold);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+transform: perspective(1000px) rotateX(10deg);
+}
+
+.logo-text p {
+color: var(--primary-gold);
+font-size: 1rem;
+opacity: 0.9;
+}
+
+/* Dark Mode Toggle */
+.theme-toggle {
+position: relative;
+width: 60px;
+height: 30px;
+background: var(--rich-black);
+border-radius: 25px;
+border: 2px solid var(--primary-gold);
+cursor: pointer;
+transition: all 0.3s ease;
+transform-style: preserve-3d;
+}
+
+.theme-toggle::before {
+content: '';
+position: absolute;
+top: 2px;
+left: 2px;
+width: 22px;
+height: 22px;
+background: var(--primary-gold);
+border-radius: 50%;
+transition: all 0.3s ease;
+transform: translateZ(10px);
+box-shadow: 0 0 10px var(--shadow-gold);
+}
+
+[data-theme="Black"] .theme-toggle::before {
+transform: translateX(26px) translateZ(10px);
+}
+
+/* Navigation with 3D hover effects */
+.nav-links {
+display: flex;
+gap: 2rem;
+list-style: none;
+}
+
+.nav-links a {
+color: var(--primary-gold);
+text-decoration: none;
+font-weight: 600;
+padding: 0.5rem 1rem;
+border-radius: 8px;
+transition: all 0.3s ease;
+transform-style: preserve-3d;
+position: relative;
+overflow: hidden;
+}
+
+.nav-links a::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: var(--gradient-gold);
+transition: all 0.3s ease;
+z-index: -1;
+transform: skewX(-20deg);
+}
+
+.nav-links a:hover {
+color: var(--deep-black);
+transform: translateY(-5px) rotateX(10deg);
+}
+
+.nav-links a:hover::before {
+left: 0;
+}
+
+/* Diplomatic Login Button */
+.diplomatic-login {
+background: var(--gradient-gold);
+color: var(--deep-black);
+padding: 1rem 2rem;
+border: none;
+border-radius: 25px;
+font-weight: bold;
+cursor: pointer;
+transition: all 0.3s ease;
+transform-style: preserve-3d;
+position: relative;
+overflow: hidden;
+animation: pulse3d 3s infinite;
+}
+
+.diplomatic-login::before {
+content: '🏛️';
+margin-right: 0.5rem;
+}
+
+.diplomatic-login:hover {
+transform: translateY(-8px) rotateX(20deg) scale(1.1);
+box-shadow: 0 15px 40px var(--shadow-gold);
+}
+
+/* Hero Section with 3D elements */
+.hero {
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+background: var(--gradient-black);
+position: relative;
+overflow: hidden;
+perspective: 1000px;
+}
+
+.hero::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: radial-gradient(circle at 50% 50%, var(--shadow-gold), transparent 70%);
+animation: pulse3d 4s ease-in-out infinite;
+}
+
+.hero-content {
+max-width: 1200px;
+z-index: 2;
+transform-style: preserve-3d;
+animation: float3d 6s ease-in-out infinite;
+}
+
+.hero h2 {
+font-size: 4rem;
+background: var(--gradient-gold);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 2rem;
+transform: perspective(1000px) rotateX(15deg);
+text-shadow: 0 0 30px var(--shadow-gold);
+}
+
+.hero p {
+font-size: 1.5rem;
+color: var(--primary-gold);
+margin-bottom: 3rem;
+opacity: 0.9;
+transform: perspective(1000px) rotateX(-5deg);
+}
+
+.hero-buttons {
+display: flex;
+gap: 2rem;
+justify-content: center;
+flex-wrap: wrap;
+}
+
+.btn-primary, .btn-secondary {
+padding: 1.2rem 2.5rem;
+border-radius: 30px;
+font-size: 1.2rem;
+font-weight: bold;
+cursor: pointer;
+transition: all 0.4s ease;
+transform-style: preserve-3d;
+position: relative;
+overflow: hidden;
+}
+
+.btn-primary {
+background: var(--gradient-gold);
+color: var(--deep-black);
+border: none;
+animation: glow 2s ease-in-out infinite;
+}
+
+.btn-primary::before {
+content: '🇮🇳';
+margin-right: 0.5rem;
+}
+
+.btn-primary:hover {
+transform: translateY(-10px) rotateX(20deg) scale(1.1);
+box-shadow: 0 20px 50px var(--shadow-gold);
+}
+
+.btn-secondary {
+background: transparent;
+color: var(--primary-gold);
+border: 2px solid var(--primary-gold);
+}
+
+.btn-secondary:hover {
+background: var(--primary-gold);
+color: var(--deep-black);
+transform: translateY(-10px) rotateX(20deg) scale(1.1);
+}
+
+/* India Priority Section with enhanced 3D */
+.india-priority {
+padding: 5rem 2rem;
+background: linear-gradient(135deg, 
+    rgba(255, 165, 0, 0.1), 
+    rgba(255, 255, 255, 0.05), 
+    rgba(0, 128, 0, 0.1));
+position: relative;
+overflow: hidden;
+}
+
+.india-priority::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 165, 0, 0.2), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 128, 0, 0.2), transparent 50%);
+animation: rotate3d 20s linear infinite;
+}
+
+.section-title {
+text-align: center;
+margin-bottom: 4rem;
+transform-style: preserve-3d;
+}
+
+.section-title h3 {
+font-size: 3rem;
+background: var(--gradient-gold);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 1rem;
+transform: perspective(1000px) rotateX(10deg);
+}
+
+.section-title p {
+font-size: 1.3rem;
+color: var(--primary-gold);
+opacity: 0.9;
+}
+
+.features-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+gap: 3rem;
+max-width: 1400px;
+margin: 0 auto;
+}
+
+.feature-card {
+background: var(--gradient-black);
+padding: 3rem;
+border-radius: 20px;
+border: 2px solid var(--primary-gold);
+transition: all 0.5s ease;
+transform-style: preserve-3d;
+position: relative;
+overflow: hidden;
+animation: float3d 4s ease-in-out infinite;
+}
+
+.feature-card::before {
+content: '';
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: radial-gradient(circle, var(--shadow-gold), transparent 70%);
+opacity: 0;
+transition: all 0.5s ease;
+animation: rotate3d 8s linear infinite;
+}
+
+.feature-card:hover {
+transform: translateY(-20px) rotateX(15deg) rotateY(5deg);
+box-shadow: 0 30px 60px var(--shadow-gold);
+}
+
+.feature-card:hover::before {
+opacity: 0.1;
+}
+
+.feature-icon {
+font-size: 4rem;
+margin-bottom: 2rem;
+display: block;
+transform: perspective(1000px) rotateX(20deg);
+animation: float3d 3s ease-in-out infinite;
+}
+
+.feature-card h4 {
+font-size: 1.8rem;
+color: var(--primary-gold);
+margin-bottom: 1rem;
+transform: perspective(1000px) rotateX(10deg);
+}
+
+.feature-card p {
+color: var(--rich-black);
+line-height: 1.6;
+opacity: 0.9;
+}
+
+/* Countries Section with 3D grid */
+.countries-section {
+padding: 5rem 2rem;
+background: var(--gradient-black);
+position: relative;
+}
+
+.priority-countries {
+margin-bottom: 4rem;
+}
+
+.priority-countries h4 {
+text-align: center;
+font-size: 2.5rem;
+color: var(--primary-gold);
+margin-bottom: 3rem;
+transform: perspective(1000px) rotateX(10deg);
+}
+
+.priority-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 2rem;
+max-width: 1400px;
+margin: 0 auto;
+}
+
+.country-card {
+background: var(--gradient-black);
+padding: 2rem;
+border-radius: 15px;
+border: 2px solid var(--primary-gold);
+text-align: center;
+transition: all 0.5s ease;
+transform-style: preserve-3d;
+cursor: pointer;
+position: relative;
+overflow: hidden;
+}
+
+.country-card::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: var(--gradient-gold);
+opacity: 0;
+transition: all 0.3s ease;
+z-index: 1;
+}
+
+.country-card:hover {
+transform: translateY(-15px) rotateX(20deg) rotateY(10deg) scale(1.05);
+box-shadow: 0 25px 50px var(--shadow-gold);
+}
+
+.country-card:hover::before {
+opacity: 0.1;
+}
+
+.country-flag {
+font-size: 4rem;
+margin-bottom: 1rem;
+display: block;
+transform: perspective(1000px) rotateX(15deg);
+animation: float3d 2s ease-in-out infinite;
+position: relative;
+z-index: 2;
+}
+
+.country-name {
+font-size: 1.2rem;
+font-weight: bold;
+color: var(--primary-gold);
+margin-bottom: 0.5rem;
+position: relative;
+z-index: 2;
+}
+
+.country-status {
+font-size: 0.9rem;
+color: var(--rich-black);
+opacity: 0.8;
+position: relative;
+z-index: 2;
+}
+
+/* All Countries Grid */
+.all-countries {
+margin-top: 4rem;
+}
+
+.all-countries h4 {
+text-align: center;
+font-size: 2rem;
+color: var(--primary-gold);
+margin-bottom: 3rem;
+}
+
+.countries-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+gap: 1rem;
+max-width: 1400px;
+margin: 0 auto;
+}
+
+.flag-card {
+background: var(--gradient-black);
+padding: 1rem;
+border-radius: 10px;
+border: 1px solid var(--primary-gold);
+text-align: center;
+transition: all 0.3s ease;
+transform-style: preserve-3d;
+cursor: pointer;
+}
+
+.flag-card:hover {
+transform: translateY(-10px) rotateX(15deg) scale(1.2);
+box-shadow: 0 15px 30px var(--shadow-gold);
+border-color: var(--accent-gold);
+}
+
+.flag-card span {
+font-size: 2.5rem;
+display: block;
+animation: float3d 1.5s ease-in-out infinite;
+}
+
+/* Treaties Section - Enhanced Brightness */
+.treaties-section {
+padding: 5rem 2rem;
+background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.3), 
+    rgba(255, 165, 0, 0.2), 
+    rgba(255, 140, 0, 0.1));
+position: relative;
+overflow: hidden;
+}
+
+.treaties-section::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: 
+    radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.4), transparent 60%),
+    radial-gradient(circle at 70% 70%, rgba(255, 165, 0, 0.3), transparent 60%);
+animation: pulse3d 6s ease-in-out infinite;
+}
+
+.treaties-section .section-title h3 {
+font-size: 3.5rem;
+text-shadow: 0 0 40px var(--primary-gold);
+animation: glow 3s ease-in-out infinite;
+}
+
+.treaties-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+gap: 3rem;
+max-width: 1400px;
+margin: 0 auto;
+position: relative;
+z-index: 2;
+}
+
+.treaty-card {
+background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.2), 
+    rgba(0, 0, 0, 0.8));
+padding: 3rem;
+border-radius: 20px;
+border: 3px solid var(--primary-gold);
+transition: all 0.5s ease;
+transform-style: preserve-3d;
+position: relative;
+overflow: hidden;
+box-shadow: 0 0 30px var(--shadow-gold);
+animation: glow 4s ease-in-out infinite;
+}
+
+.treaty-card::before {
+content: '';
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: linear-gradient(45deg, 
+    transparent, 
+    rgba(255, 215, 0, 0.2), 
+    transparent);
+animation: rotate3d 10s linear infinite;
+}
+
+.treaty-card:hover {
+transform: translateY(-25px) rotateX(20deg) rotateY(10deg) scale(1.05);
+box-shadow: 0 0 60px var(--primary-gold);
+border-color: var(--accent-gold);
+}
+
+.treaty-card h4 {
+font-size: 2rem;
+color: var(--primary-gold);
+margin-bottom: 2rem;
+position: relative;
+z-index: 2;
+text-shadow: 0 0 20px var(--primary-gold);
+}
+
+.treaty-list {
+list-style: none;
+position: relative;
+z-index: 2;
+}
+
+.treaty-list li {
+color: var(--primary-gold);
+margin-bottom: 1rem;
+padding-left: 2rem;
+position: relative;
+font-weight: 500;
+text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.treaty-list li::before {
+content: '⭐';
+position: absolute;
+left: 0;
+color: var(--accent-gold);
+animation: pulse3d 2s infinite;
+}
+
+/* Embassy Section */
+.embassy-section {
+padding: 5rem 2rem;
+background: var(--gradient-black);
+}
+
+.embassy-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+gap: 3rem;
+max-width: 1400px;
+margin: 0 auto;
+}
+
+.embassy-card {
+background: var(--gradient-black);
+padding: 2.5rem;
+border-radius: 20px;
+border: 2px solid var(--primary-gold);
+transition: all 0.5s ease;
+transform-style: preserve-3d;
+position: relative;
+overflow: hidden;
+}
+
+.embassy-card:hover {
+transform: translateY(-20px) rotateX(15deg) rotateY(5deg);
+box-shadow: 0 30px 60px var(--shadow-gold);
+}
+
+.embassy-header {
+display: flex;
+align-items: center;
+margin-bottom: 2rem;
+}
+
+.embassy-header span {
+font-size: 3rem;
+margin-right: 1rem;
+animation: float3d 2s ease-in-out infinite;
+}
+
+.embassy-info h4 {
+font-size: 1.5rem;
+color: var(--primary-gold);
+margin-bottom: 0.5rem;
+}
+
+.embassy-info p {
+color: var(--rich-black);
+opacity: 0.8;
+}
+
+.embassy-services {
+list-style: none;
+}
+
+.embassy-services li {
+color: var(--rich-black);
+margin-bottom: 0.8rem;
+padding-left: 1.5rem;
+position: relative;
+}
+
+.embassy-services li::before {
+content: '🔸';
+position: absolute;
+left: 0;
+color: var(--primary-gold);
+}
+
+/* News Section */
+.news-section {
+padding: 5rem 2rem;
+background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.1), 
+    rgba(0, 0, 0, 0.9));
+}
+
+.news-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+gap: 3rem;
+max-width: 1400px;
+margin: 0 auto;
+}
+
+.news-card {
+background: var(--gradient-black);
+padding: 2.5rem;
+border-radius: 20px;
+border: 2px solid var(--primary-gold);
+transition: all 0.5s ease;
+transform-style: preserve-3d;
+position: relative;
+overflow: hidden;
+}
+
+.news-card:hover {
+transform: translateY(-20px) rotateX(15deg) rotateY(5deg);
+box-shadow: 0 30px 60px var(--shadow-gold);
+}
+
+.news-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 2rem;
+}
+
+.news-flag {
+font-size: 2.5rem;
+animation: float3d 1.5s ease-in-out infinite;
+}
+
+.news-category {
+background: var(--gradient-gold);
+color: var(--deep-black);
+padding: 0.5rem 1rem;
+border-radius: 20px;
+font-size: 0.9rem;
+font-weight: bold;
+}
+
+.news-title {
+font-size: 1.5rem;
+color: var(--primary-gold);
+margin-bottom: 1rem;
+}
+
+.news-content {
+color: var(--rich-black);
+margin-bottom: 1rem;
+line-height: 1.6;
+}
+
+.news-date {
+color: var(--primary-gold);
+font-size: 0.9rem;
+opacity: 0.8;
+}
+
+/* Statistics Section */
+.stats-section {
+padding: 5rem 2rem;
+background: var(--gradient-black);
+text-align: center;
+}
+
+.stats-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 3rem;
+max-width: 1200px;
+margin: 0 auto;
+}
+
+.stat-card {
+transform-style: preserve-3d;
+animation: float3d 3s ease-in-out infinite;
+}
+
+.stat-icon {
+font-size: 5rem;
+margin-bottom: 1rem;
+display: block;
+animation: rotate3d 8s linear infinite;
+}
+
+.stat-number {
+font-size: 3rem;
+font-weight: bold;
+color: var(--primary-gold);
+margin-bottom: 1rem;
+text-shadow: 0 0 20px var(--shadow-gold);
+}
+
+.stat-label {
+font-size: 1.3rem;
+color: var(--rich-black);
+opacity: 0.9;
+}
+
+/* Footer */
+.footer {
+background: var(--deep-black);
+color: var(--primary-gold);
+padding: 4rem 2rem 2rem;
+}
+
+.footer-content {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 3rem;
+max-width: 1400px;
+margin: 0 auto;
+}
+
+.footer-section h5 {
+font-size: 1.3rem;
+margin-bottom: 1.5rem;
+color: var(--primary-gold);
+}
+
+.footer-section ul {
+list-style: none;
+}
+
+.footer-section ul li {
+margin-bottom: 0.8rem;
+}
+
+.footer-section ul li a {
+color: var(--rich-black);
+text-decoration: none;
+transition: all 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+color: var(--primary-gold);
+transform: translateX(10px);
+}
+
+.footer-bottom {
+border-top: 1px solid var(--primary-gold);
+margin-top: 3rem;
+padding-top: 2rem;
+text-align: center;
+color: var(--rich-black);
+}
+
+/* Modal Styles */
+.modal {
+display: none;
+position: fixed;
+z-index: 2000;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.8);
+backdrop-filter: blur(10px);
+}
+
+.modal.active {
+display: flex;
+align-items: center;
+justify-content: center;
+animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+background: var(--gradient-black);
+padding: 3rem;
+border-radius: 20px;
+border: 3px solid var(--primary-gold);
+max-width: 500px;
+width: 90%;
+text-align: center;
+transform-style: preserve-3d;
+animation: slideIn3d 0.5s ease;
+box-shadow: 0 0 50px var(--shadow-gold);
+}
+
+.modal h3 {
+color: var(--primary-gold);
+margin-bottom: 2rem;
+font-size: 2rem;
+}
+
+.form-group {
+margin-bottom: 1.5rem;
+text-align: left;
+}
+
+.form-group label {
+display: block;
+color: var(--primary-gold);
+margin-bottom: 0.5rem;
+font-weight: bold;
+}
+
+.form-group input, .form-group select {
+width: 100%;
+padding: 1rem;
+border: 2px solid var(--primary-gold);
+border-radius: 10px;
+background: var(--rich-black);
+color: var(--primary-gold);
+font-size: 1rem;
+transition: all 0.3s ease;
+}
+
+.form-group input:focus, .form-group select:focus {
+outline: none;
+border-color: var(--accent-gold);
+box-shadow: 0 0 20px var(--shadow-gold);
+transform: translateY(-2px);
+}
+
+.modal-buttons {
+display: flex;
+gap: 1rem;
+justify-content: center;
+margin-top: 2rem;
+}
+
+.btn-modal {
+padding: 1rem 2rem;
+border: none;
+border-radius: 10px;
+font-weight: bold;
+cursor: pointer;
+transition: all 0.3s ease;
+transform-style: preserve-3d;
+}
+
+.btn-modal.primary {
+background: var(--gradient-gold);
+color: var(--deep-black);
+}
+
+.btn-modal.secondary {
+background: transparent;
+color: var(--primary-gold);
+border: 2px solid var(--primary-gold);
+}
+
+.btn-modal:hover {
+transform: translateY(-5px) scale(1.05);
+}
+
+.close {
+position: absolute;
+top: 1rem;
+right: 1.5rem;
+font-size: 2rem;
+color: var(--primary-gold);
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+.close:hover {
+color: var(--accent-gold);
+transform: rotate(90deg) scale(1.2);
+}
+
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+.header-content {
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+}
+
+.hero-buttons {
+    flex-direction: column;
+    align-items: center;
+}
+
+.section-title h3 {
+    font-size: 2rem;
+}
+
+.features-grid,
+.priority-grid,
+.treaties-grid,
+.embassy-grid,
+.news-grid {
+    grid-template-columns: 1fr;
+}
+
+.countries-grid {
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 0.5rem;
+}
+
+.flag-card span {
+    font-size: 2rem;
+}
+}
+</style>
+</head>
+<body data-theme="light">
+<!-- Header -->
+<header class="header">
+<div class="header-content">
+<div class="logo-section">
+    <div class="logo">eD</div>
+    <div class="logo-text">
+        <h1>eDiplomat</h1>
+        <p>Global Collaboration Portal</p>
+    </div>
+</div>
+
+<nav class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#countries">Countries</a>
+    <a href="#collaborations">Collaborations</a>
+    <a href="#treaties">Treaties</a>
+    <a href="#embassy">Embassy</a>
+    <a href="#news">News</a>
+</nav>
+
+<div style="display: flex; align-items: center; gap: 1rem;">
+    <div class="theme-toggle" onclick="toggleTheme()"></div>
+    <button class="diplomatic-login" onclick="openLogin()">Diplomatic Login</button>
+</div>
+</div>
+</header>
+
+<!-- Hero Section -->
+<section id="home" class="hero">
+<div class="hero-content">
+<h2>Strengthening Global<br><span style="color: var(--accent-gold);">Diplomatic</span> Relations</h2>
+<p>Welcome to eDiplomat - The premier digital platform connecting nations, fostering international cooperation, and facilitating diplomatic excellence across 195 countries worldwide.</p>
+<div class="hero-buttons">
+    <button class="btn-primary" onclick="openCountryModal('India')">India Priority Access</button>
+    <button class="btn-secondary" onclick="scrollToSection('countries')">Explore Global Network</button>
+</div>
+</div>
+</section>
+
+<!-- India Priority Section -->
+<section class="india-priority">
+<div class="section-title">
+<h3>🇮🇳 India - Leading Global Diplomacy</h3>
+<p>Celebrating India's role as a global diplomatic leader, fostering international partnerships and promoting world peace through strategic collaboration.</p>
+</div>
+<div class="features-grid">
+<div class="feature-card" onclick="openFeatureModal('parliamentary')">
+    <span class="feature-icon">🏛️</span>
+    <h4>Parliamentary Diplomacy</h4>
+    <p>Leading democratic values and parliamentary cooperation across nations with the world's largest democracy.</p>
+</div>
+<div class="feature-card" onclick="openFeatureModal('g20')">
+    <span class="feature-icon">🌏</span>
+    <h4>G20 Leadership</h4>
+    <p>Spearheading global economic cooperation and sustainable development initiatives under India's presidency.</p>
+</div>
+<div class="feature-card" onclick="openFeatureModal('peace')">
+    <span class="feature-icon">🕊️</span>
+    <h4>Peace Initiatives</h4>
+    <p>Promoting 'Vasudhaiva Kutumbakam' - the world is one family philosophy for global harmony.</p>
+</div>
+</div>
+</section>
+
+<!-- Countries Section -->
+<section id="countries" class="countries-section">
+<div class="section-title">
+<h3>Global Diplomatic Network</h3>
+<p>Connecting 195 nations through digital diplomacy, fostering understanding and collaboration across continents.</p>
+</div>
+
+<div class="priority-countries">
+<h4>🌟 Priority Nations</h4>
+<div class="priority-grid">
+    <div class="country-card" onclick="openCountryModal('India')">
+        <span class="country-flag">🇮🇳</span>
+        <div class="country-name">India</div>
+        <div class="country-status">Prime Partner</div>
+    </div>
+    <div class="country-card" onclick="openCountryModal('United States')">
+        <span class="country-flag">🇺🇸</span>
+        <div class="country-name">United States</div>
+        <div class="country-status">Strategic Ally</div>
+    </div>
+    <div class="country-card" onclick="openCountryModal('United Kingdom')">
+        <span class="country-flag">🇬🇧</span>
+        <div class="country-name">United Kingdom</div>
+        <div class="country-status">Historic Partner</div>
+    </div>
+    <div class="country-card" onclick="openCountryModal('France')">
+        <span class="country-flag">🇫🇷</span>
+        <div class="country-name">France</div>
+        <div class="country-status">Cultural Bridge</div>
+    </div>
+    <div class="country-card" onclick="openCountryModal('Germany')">
+        <span class="country-flag">🇩🇪</span>
+        <div class="country-name">Germany</div>
+        <div class="country-status">Tech Collaboration</div>
+    </div>
+    <div class="country-card" onclick="openCountryModal('Japan')">
+        <span class="country-flag">🇯🇵</span>
+        <div class="country-name">Japan</div>
+        <div class="country-status">Innovation Hub</div>
+    </div>
+    <div class="country-card" onclick="openCountryModal('China')">
+        <span class="country-flag">🇨🇳</span>
+        <div class="country-name">China</div>
+        <div class="country-status">Economic Partner</div>
+    </div>
+    <div class="country-card" onclick="openCountryModal('Russia')">
+        <span class="country-flag">🇷🇺</span>
+        <div class="country-name">Russia</div>
+        <div class="country-status">Strategic Partner</div>
+    </div>
+</div>
+</div>
+
+<div class="all-countries">
+<h4>🌍 All Nations Network</h4>
+<div class="countries-grid">
+    <div class="flag-card" onclick="openCountryModal('Afghanistan')"><span>🇦🇫</span></div>
+    <div class="flag-card" onclick="openCountryModal('Albania')"><span>🇦🇱</span></div>
+    <div class="flag-card" onclick="openCountryModal('Algeria')"><span>🇩🇿</span></div>
+    <div class="flag-card" onclick="openCountryModal('Andorra')"><span>🇦🇩</span></div>
+    <div class="flag-card" onclick="openCountryModal('Angola')"><span>🇦🇴</span></div>
+    <div class="flag-card" onclick="openCountryModal('Argentina')"><span>🇦🇷</span></div>
+    <div class="flag-card" onclick="openCountryModal('Armenia')"><span>🇦🇲</span></div>
+    <div class="flag-card" onclick="openCountryModal('Australia')"><span>🇦🇺</span></div>
+    <div class="flag-card" onclick="openCountryModal('Austria')"><span>🇦🇹</span></div>
+    <div class="flag-card" onclick="openCountryModal('Azerbaijan')"><span>🇦🇿</span></div>
+    <div class="flag-card" onclick="openCountryModal('Bahrain')"><span>🇧🇭</span></div>
+    <div class="flag-card" onclick="openCountryModal('Bangladesh')"><span>🇧🇩</span></div>
+    <div class="flag-card" onclick="openCountryModal('Belarus')"><span>🇧🇾</span></div>
+    <div class="flag-card" onclick="openCountryModal('Belgium')"><span>🇧🇪</span></div>
+    <div class="flag-card" onclick="openCountryModal('Belize')"><span>🇧🇿</span></div>
+    <div class="flag-card" onclick="openCountryModal('Benin')"><span>🇧🇯</span></div>
+    <div class="flag-card" onclick="openCountryModal('Bhutan')"><span>🇧🇹</span></div>
+    <div class="flag-card" onclick="openCountryModal('Bolivia')"><span>🇧🇴</span></div>
+    <div class="flag-card" onclick="openCountryModal('Bosnia')"><span>🇧🇦</span></div>
+    <div class="flag-card" onclick="openCountryModal('Botswana')"><span>🇧🇼</span></div>
+    <div class="flag-card" onclick="openCountryModal('Brazil')"><span>🇧🇷</span></div>
+    <div class="flag-card" onclick="openCountryModal('Brunei')"><span>🇧🇳</span></div>
+    <div class="flag-card" onclick="openCountryModal('Bulgaria')"><span>🇧🇬</span></div>
+    <div class="flag-card" onclick="openCountryModal('Burkina Faso')"><span>🇧🇫</span></div>
+    <div class="flag-card" onclick="openCountryModal('Burundi')"><span>🇧🇮</span></div>
+    <div class="flag-card" onclick="openCountryModal('Cambodia')"><span>🇰🇭</span></div>
+    <div class="flag-card" onclick="openCountryModal('Cameroon')"><span>🇨🇲</span></div>
+    <div class="flag-card" onclick="openCountryModal('Canada')"><span>🇨🇦</span></div>
+    <div class="flag-card" onclick="openCountryModal('Cape Verde')"><span>🇨🇻</span></div>
+    <div class="flag-card" onclick="openCountryModal('Chad')"><span>🇹🇩</span></div>
+    <div class="flag-card" onclick="openCountryModal('Chile')"><span>🇨🇱</span></div>
+    <div class="flag-card" onclick="openCountryModal('Colombia')"><span>🇨🇴</span></div>
+    <div class="flag-card" onclick="openCountryModal('Comoros')"><span>🇰🇲</span></div>
+    <div class="flag-card" onclick="openCountryModal('Congo')"><span>🇨🇬</span></div>
+    <div class="flag-card" onclick="openCountryModal('Costa Rica')"><span>🇨🇷</span></div>
+    <div class="flag-card" onclick="openCountryModal('Croatia')"><span>🇭🇷</span></div>
+    <div class="flag-card" onclick="openCountryModal('Cuba')"><span>🇨🇺</span></div>
+    <div class="flag-card" onclick="openCountryModal('Cyprus')"><span>🇨🇾</span></div>
+    <div class="flag-card" onclick="openCountryModal('Czech Republic')"><span>🇨🇿</span></div>
+    <div class="flag-card" onclick="openCountryModal('Denmark')"><span>🇩🇰</span></div>
+    <div class="flag-card" onclick="openCountryModal('Djibouti')"><span>🇩🇯</span></div>
+    <div class="flag-card" onclick="openCountryModal('Dominican Republic')"><span>🇩🇴</span></div>
+    <div class="flag-card" onclick="openCountryModal('Ecuador')"><span>🇪🇨</span></div>
+    <div class="flag-card" onclick="openCountryModal('Egypt')"><span>🇪🇬</span></div>
+    <div class="flag-card" onclick="openCountryModal('El Salvador')"><span>🇸🇻</span></div>
+    <div class="flag-card" onclick="openCountryModal('Estonia')"><span>🇪🇪</span></div>
+    <div class="flag-card" onclick="openCountryModal('Ethiopia')"><span>🇪🇹</span></div>
+    <div class="flag-card" onclick="openCountryModal('Fiji')"><span>🇫🇯</span></div>
+    <div class="flag-card" onclick="openCountryModal('Finland')"><span>🇫🇮</span></div>
+    <div class="flag-card" onclick="openCountryModal('Gabon')"><span>🇬🇦</span></div>
+    <div class="flag-card" onclick="openCountryModal('Gambia')"><span>🇬🇲</span></div>
+    <div class="flag-card" onclick="openCountryModal('Georgia')"><span>🇬🇪</span></div>
+    <div class="flag-card" onclick="openCountryModal('Ghana')"><span>🇬🇭</span></div>
+    <div class="flag-card" onclick="openCountryModal('Greece')"><span>🇬🇷</span></div>
+    <div class="flag-card" onclick="openCountryModal('Guatemala')"><span>🇬🇹</span></div>
+    <div class="flag-card" onclick="openCountryModal('Guinea')"><span>🇬🇳</span></div>
+    <div class="flag-card" onclick="openCountryModal('Haiti')"><span>🇭🇹</span></div>
+    <div class="flag-card" onclick="openCountryModal('Honduras')"><span>🇭🇳</span></div>
+    <div class="flag-card" onclick="openCountryModal('Hungary')"><span>🇭🇺</span></div>
+    <div class="flag-card" onclick="openCountryModal('Iceland')"><span>🇮🇸</span></div>
+    <div class="flag-card" onclick="openCountryModal('Indonesia')"><span>🇮🇩</span></div>
+    <div class="flag-card" onclick="openCountryModal('Iran')"><span>🇮🇷</span></div>
+    <div class="flag-card" onclick="openCountryModal('Iraq')"><span>🇮🇶</span></div>
+    <div class="flag-card" onclick="openCountryModal('Ireland')"><span>🇮🇪</span></div>
+    <div class="flag-card" onclick="openCountryModal('Israel')"><span>🇮🇱</span></div>
+    <div class="flag-card" onclick="openCountryModal('Italy')"><span>🇮🇹</span></div>
+    <div class="flag-card" onclick="openCountryModal('Jamaica')"><span>🇯🇲</span></div>
+    <div class="flag-card" onclick="openCountryModal('Jordan')"><span>🇯🇴</span></div>
+    <div class="flag-card" onclick="openCountryModal('Kazakhstan')"><span>🇰🇿</span></div>
+    <div class="flag-card" onclick="openCountryModal('Kenya')"><span>🇰🇪</span></div>
+    <div class="flag-card" onclick="openCountryModal('South Korea')"><span>🇰🇷</span></div>
+    <div class="flag-card" onclick="openCountryModal('Kuwait')"><span>🇰🇼</span></div>
+    <div class="flag-card" onclick="openCountryModal('Kyrgyzstan')"><span>🇰🇬</span></div>
+    <div class="flag-card" onclick="openCountryModal('Laos')"><span>🇱🇦</span></div>
+    <div class="flag-card" onclick="openCountryModal('Latvia')"><span>🇱🇻</span></div>
+    <div class="flag-card" onclick="openCountryModal('Lebanon')"><span>🇱🇧</span></div>
+    <div class="flag-card" onclick="openCountryModal('Liberia')"><span>🇱🇷</span></div>
+    <div class="flag-card" onclick="openCountryModal('Libya')"><span>🇱🇾</span></div>
+    <div class="flag-card" onclick="openCountryModal('Lithuania')"><span>🇱🇹</span></div>
+    <div class="flag-card" onclick="openCountryModal('Luxembourg')"><span>🇱🇺</span></div>
+    <div class="flag-card" onclick="openCountryModal('Madagascar')"><span>🇲🇬</span></div>
+    <div class="flag-card" onclick="openCountryModal('Malawi')"><span>🇲🇼</span></div>
+    <div class="flag-card" onclick="openCountryModal('Malaysia')"><span>🇲🇾</span></div>
+    <div class="flag-card" onclick="openCountryModal('Maldives')"><span>🇲🇻</span></div>
+    <div class="flag-card" onclick="openCountryModal('Mali')"><span>🇲🇱</span></div>
+    <div class="flag-card" onclick="openCountryModal('Malta')"><span>🇲🇹</span></div>
+    <div class="flag-card" onclick="openCountryModal('Mauritania')"><span>🇲🇷</span></div>
+    <div class="flag-card" onclick="openCountryModal('Mauritius')"><span>🇲🇺</span></div>
+    <div class="flag-card" onclick="openCountryModal('Mexico')"><span>🇲🇽</span></div>
+    <div class="flag-card" onclick="openCountryModal('Moldova')"><span>🇲🇩</span></div>
+    <div class="flag-card" onclick="openCountryModal('Monaco')"><span>🇲🇨</span></div>
+    <div class="flag-card" onclick="openCountryModal('Mongolia')"><span>🇲🇳</span></div>
+    <div class="flag-card" onclick="openCountryModal('Montenegro')"><span>🇲🇪</span></div>
+    <div class="flag-card" onclick="openCountryModal('Morocco')"><span>🇲🇦</span></div>
+    <div class="flag-card" onclick="openCountryModal('Mozambique')"><span>🇲🇿</span></div>
+    <div class="flag-card" onclick="openCountryModal('Myanmar')"><span>🇲🇲</span></div>
+    <div class="flag-card" onclick="openCountryModal('Namibia')"><span>🇳🇦</span></div>
+    <div class="flag-card" onclick="openCountryModal('Nepal')"><span>🇳🇵</span></div>
+    <div class="flag-card" onclick="openCountryModal('Netherlands')"><span>🇳🇱</span></div>
+    <div class="flag-card" onclick="openCountryModal('New Zealand')"><span>🇳🇿</span></div>
+    <div class="flag-card" onclick="openCountryModal('Nicaragua')"><span>🇳🇮</span></div>
+    <div class="flag-card" onclick="openCountryModal('Niger')"><span>🇳🇪</span></div>
+    <div class="flag-card" onclick="openCountryModal('Nigeria')"><span>🇳🇬</span></div>
+    <div class="flag-card" onclick="openCountryModal('Norway')"><span>🇳🇴</span></div>
+    <div class="flag-card" onclick="openCountryModal('Oman')"><span>🇴🇲</span></div>
+    <div class="flag-card" onclick="openCountryModal('Pakistan')"><span>🇵🇰</span></div>
+    <div class="flag-card" onclick="openCountryModal('Panama')"><span>🇵🇦</span></div>
+    <div class="flag-card" onclick="openCountryModal('Paraguay')"><span>🇵🇾</span></div>
+    <div class="flag-card" onclick="openCountryModal('Peru')"><span>🇵🇪</span></div>
+    <div class="flag-card" onclick="openCountryModal('Philippines')"><span>🇵🇭</span></div>
+    <div class="flag-card" onclick="openCountryModal('Poland')"><span>🇵🇱</span></div>
+    <div class="flag-card" onclick="openCountryModal('Portugal')"><span>🇵🇹</span></div>
+    <div class="flag-card" onclick="openCountryModal('Qatar')"><span>🇶🇦</span></div>
+    <div class="flag-card" onclick="openCountryModal('Romania')"><span>🇷🇴</span></div>
+    <div class="flag-card" onclick="openCountryModal('Rwanda')"><span>🇷🇼</span></div>
+    <div class="flag-card" onclick="openCountryModal('Saudi Arabia')"><span>🇸🇦</span></div>
+    <div class="flag-card" onclick="openCountryModal('Senegal')"><span>🇸🇳</span></div>
+    <div class="flag-card" onclick="openCountryModal('Serbia')"><span>🇷🇸</span></div>
+    <div class="flag-card" onclick="openCountryModal('Singapore')"><span>🇸🇬</span></div>
+    <div class="flag-card" onclick="openCountryModal('Slovakia')"><span>🇸🇰</span></div>
+    <div class="flag-card" onclick="openCountryModal('Slovenia')"><span>🇸🇮</span></div>
+    <div class="flag-card" onclick="openCountryModal('Somalia')"><span>🇸🇴</span></div>
+    <div class="flag-card" onclick="openCountryModal('South Africa')"><span>🇿🇦</span></div>
+    <div class="flag-card" onclick="openCountryModal('Spain')"><span>🇪🇸</span></div>
+    <div class="flag-card" onclick="openCountryModal('Sri Lanka')"><span>🇱🇰</span></div>
+    <div class="flag-card" onclick="openCountryModal('Sudan')"><span>🇸🇩</span></div>
+    <div class="flag-card" onclick="openCountryModal('Sweden')"><span>🇸🇪</span></div>
+    <div class="flag-card" onclick="openCountryModal('Switzerland')"><span>🇨🇭</span></div>
+    <div class="flag-card" onclick="openCountryModal('Syria')"><span>🇸🇾</span></div>
+    <div class="flag-card" onclick="openCountryModal('Taiwan')"><span>🇹🇼</span></div>
+    <div class="flag-card" onclick="openCountryModal('Tajikistan')"><span>🇹🇯</span></div>
+    <div class="flag-card" onclick="openCountryModal('Tanzania')"><span>🇹🇿</span></div>
+    <div class="flag-card" onclick="openCountryModal('Thailand')"><span>🇹🇭</span></div>
+    <div class="flag-card" onclick="openCountryModal('Togo')"><span>🇹🇬</span></div>
+    <div class="flag-card" onclick="openCountryModal('Tunisia')"><span>🇹🇳</span></div>
+    <div class="flag-card" onclick="openCountryModal('Turkey')"><span>🇹🇷</span></div>
+    <div class="flag-card" onclick="openCountryModal('Uganda')"><span>🇺🇬</span></div>
+    <div class="flag-card" onclick="openCountryModal('Ukraine')"><span>🇺🇦</span></div>
+    <div class="flag-card" onclick="openCountryModal('UAE')"><span>🇦🇪</span></div>
+    <div class="flag-card" onclick="openCountryModal('Uruguay')"><span>🇺🇾</span></div>
+    <div class="flag-card" onclick="openCountryModal('Uzbekistan')"><span>🇺🇿</span></div>
+    <div class="flag-card" onclick="openCountryModal('Vatican')"><span>🇻🇦</span></div>
+    <div class="flag-card" onclick="openCountryModal('Venezuela')"><span>🇻🇪</span></div>
+    <div class="flag-card" onclick="openCountryModal('Vietnam')"><span>🇻🇳</span></div>
+    <div class="flag-card" onclick="openCountryModal('Yemen')"><span>🇾🇪</span></div>
+    <div class="flag-card" onclick="openCountryModal('Zambia')"><span>🇿🇲</span></div>
+    <div class="flag-card" onclick="openCountryModal('Zimbabwe')"><span>🇿🇼</span></div>
+</div>
+</div>
+</section>
+
+<!-- Collaboration Features -->
+<section id="collaborations" class="features-section">
+<div class="section-title">
+<h3>Diplomatic Collaboration Tools</h3>
+<p>Advanced digital infrastructure supporting international relations, treaty negotiations, and cross-border partnerships.</p>
+</div>
+<div class="features-grid">
+<div class="feature-card" onclick="openFeatureModal('treaty-management')">
+    <span class="feature-icon">📋</span>
+    <h4>Treaty Management</h4>
+    <p>Digital treaty drafting, review, and signing platform with blockchain verification and multilingual support.</p>
+</div>
+<div class="feature-card" onclick="openFeatureModal('bilateral-meetings')">
+    <span class="feature-icon">🤝</span>
+    <h4>Bilateral Meetings</h4>
+    <p>Secure video conferencing for diplomatic discussions with end-to-end encryption and real-time translation.</p>
+</div>
+<div class="feature-card" onclick="openFeatureModal('trade-analytics')">
+    <span class="feature-icon">📊</span>
+    <h4>Trade Analytics</h4>
+    <p>Real-time trade data and economic collaboration insights powered by AI-driven market analysis.</p>
+</div>
+<div class="feature-card" onclick="openFeatureModal('cultural-exchange')">
+    <span class="feature-icon">🌐</span>
+    <h4>Cultural Exchange</h4>
+    <p>Programs fostering cultural understanding and cooperation through virtual reality experiences.</p>
+</div>
+<div class="feature-card" onclick="openFeatureModal('security-cooperation')">
+    <span class="feature-icon">🛡️</span>
+    <h4>Security Cooperation</h4>
+    <p>Joint security initiatives and intelligence sharing with quantum-encrypted communications.</p>
+</div>
+<div class="feature-card" onclick="openFeatureModal('climate-action')">
+    <span class="feature-icon">🌱</span>
+    <h4>Climate Action</h4>
+    <p>Environmental cooperation and sustainability projects with real-time carbon tracking systems.</p>
+</div>
+<div class="feature-card" onclick="openFeatureModal('economic-forums')">
+    <span class="feature-icon">💼</span>
+    <h4>Economic Forums</h4>
+    <p>Investment opportunities and economic partnerships with blockchain-based smart contracts.</p>
+</div>
+<div class="feature-card" onclick="openFeatureModal('educational-exchange')">
+    <span class="feature-icon">🎓</span>
+    <h4>Educational Exchange</h4>
+    <p>Academic partnerships and student exchange programs with AI-powered matching algorithms.</p>
+</div>
+</div>
+</section>
+
+<!-- Treaties Section - Enhanced Brightness -->
+<section id="treaties" class="treaties-section">
+<div class="section-title">
+<h3>International Treaties & Agreements</h3>
+<p>Comprehensive database of international agreements, bilateral treaties, and multilateral frameworks with real-time updates and AI-powered analysis.</p>
+</div>
+<div class="treaties-grid">
+<div class="treaty-card" onclick="openTreatyModal('india-treaties')">
+    <h4>🇮🇳 India's Key Treaties</h4>
+    <ul class="treaty-list">
+        <li>Indo-US Strategic Partnership Agreement</li>
+        <li>India-Japan Economic Partnership Agreement</li>
+        <li>India-UK Comprehensive Strategic Partnership</li>
+        <li>India-France Strategic Partnership Framework</li>
+        <li>BRICS New Development Bank Agreement</li>
+        <li>Shanghai Cooperation Organization Charter</li>
+        <li>International Solar Alliance Framework</li>
+        <li>Quad Security Dialogue Framework</li>
+    </ul>
+</div>
+<div class="treaty-card" onclick="openTreatyModal('multilateral-agreements')">
+    <h4>🌍 Multilateral Agreements</h4>
+    <ul class="treaty-list">
+        <li>Paris Climate Agreement (2015)</li>
+        <li>UN Sustainable Development Goals (2030)</li>
+        <li>World Trade Organization Agreements</li>
+        <li>International Maritime Organization Convention</li>
+        <li>Nuclear Non-Proliferation Treaty</li>
+        <li>Universal Declaration of Human Rights</li>
+        <li>Geneva Conventions and Protocols</li>
+        <li>International Criminal Court Statute</li>
+    </ul>
+</div>
+<div class="treaty-card" onclick="openTreatyModal('recent-developments')">
+    <h4>📈 Recent Developments</h4>
+    <ul class="treaty-list">
+        <li>G20 New Delhi Declaration 2023</li>
+        <li>Indo-Pacific Economic Framework Agreement</li>
+        <li>Quad Leaders' Joint Statement 2024</li>
+        <li>International Solar Alliance Expansion</li>
+        <li>Coalition for Disaster Resilient Infrastructure</li>
+        <li>Global Partnership on Artificial Intelligence</li>
+        <li>One Sun One World One Grid Initiative</li>
+        <li>International Big Cat Alliance Formation</li>
+    </ul>
+</div>
+</div>
+</section>
+
+<!-- Embassy Network -->
+<section id="embassy" class="embassy-section">
+<div class="section-title">
+<h3>Global Embassy Network</h3>
+<p>Connect with diplomatic missions worldwide. Access embassy services, visa information, and consular support through our integrated digital platform.</p>
+</div>
+<div class="embassy-grid">
+<div class="embassy-card" onclick="openEmbassyModal('india')">
+    <div class="embassy-header">
+        <span>🇮🇳</span>
+        <div class="embassy-info">
+            <h4>India</h4>
+            <p>190+ Missions Worldwide</p>
+        </div>
+    </div>
+    <ul class="embassy-services">
+        <li>Visa Services & Fast Track Processing</li>
+        <li>Passport Renewal & Emergency Services</li>
+        <li>Consular Support & Citizen Services</li>
+        <li>Business Facilitation & Trade Promotion</li>
+        <li>Cultural Programs & Educational Exchange</li>
+        <li>Medical Emergency Assistance</li>
+    </ul>
+</div>
+<div class="embassy-card" onclick="openEmbassyModal('usa')">
+    <div class="embassy-header">
+        <span>🇺🇸</span>
+        <div class="embassy-info">
+            <h4>United States</h4>
+            <p>180+ Missions Worldwide</p>
+        </div>
+    </div>
+    <ul class="embassy-services">
+        <li>Trade Promotion & Investment Facilitation</li>
+        <li>Cultural Programs & Exchange Initiatives</li>
+        <li>Educational Exchange & Fulbright Programs</li>
+        <li>Security Cooperation & Intelligence Sharing</li>
+        <li>Consular Services & Citizen Protection</li>
+        <li>Scientific & Technological Cooperation</li>
+    </ul>
+</div>
+<div class="embassy-card" onclick="openEmbassyModal('uk')">
+    <div class="embassy-header">
+        <span>🇬🇧</span>
+        <div class="embassy-info">
+            <h4>United Kingdom</h4>
+            <p>160+ Missions Worldwide</p>
+        </div>
+    </div>
+    <ul class="embassy-services">
+        <li>Commonwealth Relations & Cooperation</li>
+        <li>Trade & Investment Promotion</li>
+        <li>Cultural Diplomacy & British Council Programs</li>
+        <li>Climate Action & Environmental Cooperation</li>
+        <li>Educational Excellence & Research Partnerships</li>
+        <li>Digital Innovation & Technology Transfer</li>
+    </ul>
+</div>
+<div class="embassy-card" onclick="openEmbassyModal('france')">
+    <div class="embassy-header">
+        <span>🇫🇷</span>
+        <div class="embassy-info">
+            <h4>France</h4>
+            <p>165+ Missions Worldwide</p>
+        </div>
+    </div>
+    <ul class="embassy-services">
+        <li>Francophonie Programs & Language Promotion</li>
+        <li>Cultural Exchange & Arts Cooperation</li>
+        <li>Development Aid & International Cooperation</li>
+        <li>Technology Transfer & Innovation Hubs</li>
+        <li>Luxury Goods & Fashion Industry Partnerships</li>
+        <li>Nuclear Energy & Clean Technology Cooperation</li>
+    </ul>
+</div>
+<div class="embassy-card" onclick="openEmbassyModal('germany')">
+    <div class="embassy-header">
+        <span>🇩🇪</span>
+        <div class="embassy-info">
+            <h4>Germany</h4>
+            <p>155+ Missions Worldwide</p>
+        </div>
+    </div>
+    <ul class="embassy-services">
+        <li>Technical Cooperation & Engineering Excellence</li>
+        <li>Environmental Programs & Green Technology</li>
+        <li>Educational Exchange & Research Partnerships</li>
+        <li>Innovation Hub & Startup Ecosystem Support</li>
+        <li>Industrial Cooperation & Manufacturing</li>
+        <li>Renewable Energy & Sustainability Projects</li>
+    </ul>
+</div>
+<div class="embassy-card" onclick="openEmbassyModal('japan')">
+    <div class="embassy-header">
+        <span>🇯🇵</span>
+        <div class="embassy-info">
+            <h4>Japan</h4>
+            <p>145+ Missions Worldwide</p>
+        </div>
+    </div>
+    <ul class="embassy-services">
+        <li>Economic Partnership & Trade Facilitation</li>
+        <li>Technology Cooperation & Innovation</li>
+        <li>Cultural Programs & Japan Foundation</li>
+        <li>Disaster Management & Emergency Response</li>
+        <li>Infrastructure Development & Smart Cities</li>
+        <li>Healthcare & Medical Technology Cooperation</li>
+    </ul>
+</div>
+</div>
+</section>
+
+<!-- News Section -->
+<section id="news" class="news-section">
+<div class="section-title">
+<h3>Diplomatic News & Updates</h3>
+<p>Stay informed with the latest developments in international relations and diplomatic affairs with real-time updates and AI-powered analysis.</p>
+</div>
+<div class="news-grid">
+<div class="news-card" onclick="openNewsModal('g20-summit')">
+    <div class="news-header">
+        <span class="news-flag">🇮🇳</span>
+        <span class="news-category">Summit</span>
+    </div>
+    <h4 class="news-title">India Hosts G20 Summit Successfully</h4>
+    <p class="news-content">India's G20 presidency culminated in a successful summit with unanimous adoption of the New Delhi Declaration, focusing on inclusive growth and sustainable development.</p>
+    <p class="news-date">September 2023</p>
+</div>
+<div class="news-card" onclick="openNewsModal('climate-framework')">
+    <div class="news-header">
+        <span class="news-flag">🌍</span>
+        <span class="news-category">Environment</span>
+    </div>
+    <h4 class="news-title">Climate Action Framework Launched</h4>
+    <p class="news-content">New international framework for climate cooperation launched with participation from 50+ countries, featuring innovative carbon credit mechanisms and green technology transfer.</p>
+    <p class="news-date">October 2023</p>
+</div>
+<div class="news-card" onclick="openNewsModal('trade-agreement')">
+    <div class="news-header">
+        <span class="news-flag">🤝</span>
+        <span class="news-category">Trade</span>
+    </div>
+    <h4 class="news-title">Bilateral Trade Agreement Signed</h4>
+    <p class="news-content">Major bilateral trade agreement signed promoting economic cooperation and investment flows, with projected $50 billion increase in bilateral trade volume.</p>
+    <p class="news-date">November 2023</p>
+</div>
+<div class="news-card" onclick="openNewsModal('education-program')">
+    <div class="news-header">
+        <span class="news-flag">🎓</span>
+        <span class="news-category">Education</span>
+    </div>
+    <h4 class="news-title">Educational Exchange Program Expanded</h4>
+    <p class="news-content">International student exchange program expanded to include 25 new partner universities, with focus on STEM education and research collaboration.</p>
+    <p class="news-date">December 2023</p>
+</div>
+<div class="news-card" onclick="openNewsModal('digital-partnership')">
+    <div class="news-header">
+        <span class="news-flag">💼</span>
+        <span class="news-category">Technology</span>
+    </div>
+    <h4 class="news-title">Digital Economy Partnership</h4>
+    <p class="news-content">New digital economy partnership launched to promote technology cooperation and innovation, focusing on AI, blockchain, and quantum computing.</p>
+    <p class="news-date">January 2024</p>
+</div>
+<div class="news-card" onclick="openNewsModal('maritime-security')">
+    <div class="news-header">
+        <span class="news-flag">🌊</span>
+        <span class="news-category">Security</span>
+    </div>
+    <h4 class="news-title">Maritime Security Initiative</h4>
+    <p class="news-content">Regional maritime security initiative launched to ensure safe and secure sea lanes, with joint naval exercises and intelligence sharing protocols.</p>
+    <p class="news-date">February 2024</p>
+</div>
+</div>
+</section>
+
+<!-- Statistics Section -->
+<section class="stats-section">
+<div class="section-title">
+<h3>Global Impact Statistics</h3>
+<p>Measuring the success of international diplomatic cooperation and collaboration through data-driven insights and real-time analytics.</p>
+</div>
+<div class="stats-grid">
+<div class="stat-card">
+    <span class="stat-icon">🌍</span>
+    <div class="stat-number">195</div>
+    <div class="stat-label">Countries Connected</div>
+</div>
+<div class="stat-card">
+    <span class="stat-icon">📋</span>
+    <div class="stat-number">1,200+</div>
+    <div class="stat-label">Active Treaties</div>
+</div>
+<div class="stat-card">
+    <span class="stat-icon">🏛️</span>
+    <div class="stat-number">500+</div>
+    <div class="stat-label">Diplomatic Missions</div>
+</div>
+<div class="stat-card">
+    <span class="stat-icon">👥</span>
+    <div class="stat-number">50M+</div>
+    <div class="stat-label">Citizens Served</div>
+</div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-section">
+    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+        <div class="logo">eD</div>
+        <div>
+            <h5>eDiplomat</h5>
+            <p style="color: var(--rich-black); font-size: 0.9rem;">Global Collaboration Portal</p>
+        </div>
+    </div>
+    <p style="color: var(--rich-black);">
+        Connecting nations, fostering cooperation, and building a more diplomatic world through digital innovation and advanced technology solutions.
+    </p>
+</div>
+<div class="footer-section">
+    <h5>Quick Links</h5>
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#countries">Countries</a></li>
+        <li><a href="#collaborations">Collaborations</a></li>
+        <li><a href="#treaties">Treaties</a></li>
+        <li><a href="#embassy">Embassy Network</a></li>
+        <li><a href="#news">Diplomatic News</a></li>
+    </ul>
+</div>
+<div class="footer-section">
+    <h5>Services</h5>
+    <ul>
+        <li>Treaty Management</li>
+        <li>Bilateral Meetings</li>
+        <li>Trade Facilitation</li>
+        <li>Cultural Exchange</li>
+        <li>Security Cooperation</li>
+        <li>Climate Action</li>
+    </ul>
+</div>
+<div class="footer-section">
+    <h5>Contact</h5>
+    <ul>
+        <li>📧 info@ediplomat.org</li>
+        <li>📞 +91-80-DIPLOMAT</li>
+        <li>🏛️ New Delhi, India</li>
+        <li>🌐 Global Network</li>
+        <li>🔐 Quantum Secure Communications</li>
+        <li>⚡ 24/7 Emergency Support</li>
+    </ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2024 eDiplomat. All rights reserved. | Proudly serving global diplomatic community with special focus on India's leadership in international relations.</p>
+</div>
+</footer>
+
+<!-- Modals -->
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('loginModal')">&times;</span>
+<h3>🏛️ Diplomatic Login</h3>
+<form id="loginForm">
+    <div class="form-group">
+        <label for="diplomantId">Diplomat ID:</label>
+        <input type="text" id="diplomatId" name="diplomatId" placeholder="Enter your diplomatic ID" required>
+    </div>
+    <div class="form-group">
+        <label for="country">Country/Organization:</label>
+        <select id="country" name="country" required>
+            <option value="">Select your country</option>
+            <option value="india">🇮🇳 India</option>
+            <option value="usa">🇺🇸 United States</option>
+            <option value="uk">🇬🇧 United Kingdom</option>
+            <option value="france">🇫🇷 France</option>
+            <option value="germany">🇩🇪 Germany</option>
+            <option value="japan">🇯🇵 Japan</option>
+            <option value="china">🇨🇳 China</option>
+            <option value="russia">🇷🇺 Russia</option>
+            <option value="un">🌍 United Nations</option>
+            <option value="eu">🇪🇺 European Union</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="secureKey">Secure Access Key:</label>
+        <input type="password" id="secureKey" name="secureKey" placeholder="Enter secure access key" required>
+    </div>
+    <div class="form-group">
+        <label for="biometric">Biometric Verification:</label>
+        <select id="biometric" name="biometric" required>
+            <option value="">Select verification method</option>
+            <option value="fingerprint">🔒 Fingerprint</option>
+            <option value="facial">👁️ Facial Recognition</option>
+            <option value="retinal">👀 Retinal Scan</option>
+            <option value="voice">🎤 Voice Recognition</option>
+        </select>
+    </div>
+    <div class="modal-buttons">
+        <button type="submit" class="btn-modal primary">Secure Login</button>
+        <button type="button" class="btn-modal secondary" onclick="closeModal('loginModal')">Cancel</button>
+    </div>
+</form>
+</div>
+</div>
+
+<!-- Country Modal -->
+<div id="countryModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('countryModal')">&times;</span>
+<div id="countryModalContent">
+    <!-- Dynamic content will be loaded here -->
+</div>
+</div>
+</div>
+
+<!-- Feature Modal -->
+<div id="featureModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('featureModal')">&times;</span>
+<div id="featureModalContent">
+    <!-- Dynamic content will be loaded here -->
+</div>
+</div>
+</div>
+
+<!-- Treaty Modal -->
+<div id="treatyModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('treatyModal')">&times;</span>
+<div id="treatyModalContent">
+    <!-- Dynamic content will be loaded here -->
+</div>
+</div>
+</div>
+
+<!-- Embassy Modal -->
+<div id="embassyModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('embassyModal')">&times;</span>
+<div id="embassyModalContent">
+    <!-- Dynamic content will be loaded here -->
+</div>
+</div>
+</div>
+
+<!-- News Modal -->
+<div id="newsModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('newsModal')">&times;</span>
+<div id="newsModalContent">
+    <!-- Dynamic content will be loaded here -->
+</div>
+</div>
+</div>
+
+<script>
+// Theme Toggle Functionality
+function toggleTheme() {
+const body = document.body;
+const currentTheme = body.getAttribute('data-theme');
+const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+body.setAttribute('data-theme', newTheme);
+localStorage.setItem('theme', newTheme);
+}
+
+// Load saved theme
+window.addEventListener('DOMContentLoaded', () => {
+const savedTheme = localStorage.getItem('theme') || 'light';
+document.body.setAttribute('data-theme', savedTheme);
+});
+
+// Modal Functions
+function openModal(modalId) {
+document.getElementById(modalId).classList.add('active');
+}
+
+function closeModal(modalId) {
+document.getElementById(modalId).classList.remove('active');
+}
+
+function openLogin() {
+openModal('loginModal');
+}
+
+// Smooth scrolling function
+function scrollToSection(sectionId) {
+document.getElementById(sectionId).scrollIntoView({
+    behavior: 'smooth'
+});
+}
+
+// Login form submission
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+e.preventDefault();
+const formData = new FormData(this);
+const loginData = Object.fromEntries(formData);
+
+// Simulate login process
+setTimeout(() => {
+    alert('🎉 Login Successful! Welcome to eDiplomat Secure Portal');
+    closeModal('loginModal');
+    // Here you would typically redirect to the secure diplomatic portal
+}, 1500);
+});
+
+// Country Modal Content
+function openCountryModal(countryName) {
+const countryData = {
+    'India': {
+        flag: '🇮🇳',
+        name: 'India',
+        status: 'Prime Partner',
+        population: '1.4 Billion',
+        capital: 'New Delhi',
+        languages: 'Hindi, English, 22 Official Languages',
+        currency: 'Indian Rupee (INR)',
+        gdp: '$3.7 Trillion',
+        treaties: [
+            'Indo-US Strategic Partnership',
+            'India-Japan Economic Partnership',
+            'BRICS Cooperation Framework',
+            'Quad Security Dialogue',
+            'International Solar Alliance'
+        ],
+        keyFacts: [
+            'World\'s largest democracy',
+            'G20 Presidency 2023',
+            'Leading space program',
+            'Digital India initiative',
+            'Yoga and Ayurveda global promotion'
+        ]
+    },
+    'United States': {
+        flag: '🇺🇸',
+        name: 'United States',
+        status: 'Strategic Ally',
+        population: '335 Million',
+        capital: 'Washington D.C.',
+        languages: 'English (de facto)',
+        currency: 'US Dollar (USD)',
+        gdp: '$26.9 Trillion',
+        treaties: [
+            'NATO Alliance',
+            'QUAD Partnership',
+            'AUKUS Security Pact',
+            'USMCA Trade Agreement',
+            'Indo-Pacific Strategy'
+        ],
+        keyFacts: [
+            'Leading global economy',
+            'Technology innovation hub',
+            'Military superpower',
+            'Cultural influence worldwide',
+            'Climate change initiatives'
+        ]
+    }
+    // Add more countries as needed
+};
+
+const country = countryData[countryName] || {
+    flag: '🌍',
+    name: countryName,
+    status: 'Diplomatic Partner',
+    population: 'N/A',
+    capital: 'N/A',
+    languages: 'Various',
+    currency: 'Various',
+    gdp: 'N/A',
+    treaties: ['UN Charter', 'Various bilateral agreements'],
+    keyFacts: ['Member of United Nations', 'Active in international cooperation']
+};
+
+const content = `
+    <h3>${country.flag} ${country.name}</h3>
+    <p><strong>Status:</strong> ${country.status}</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+        <div>
+            <h4 style="color: var(--primary-gold); margin-bottom: 1rem;">Basic Information</h4>
+            <p><strong>Population:</strong> ${country.population}</p>
+            <p><strong>Capital:</strong> ${country.capital}</p>
+            <p><strong>Languages:</strong> ${country.languages}</p>
+            <p><strong>Currency:</strong> ${country.currency}</p>
+            <p><strong>GDP:</strong> ${country.gdp}</p>
+        </div>
+        <div>
+            <h4 style="color: var(--primary-gold); margin-bottom: 1rem;">Key Facts</h4>
+            <ul style="list-style: none; padding: 0;">
+                ${country.keyFacts.map(fact => `<li style="margin-bottom: 0.5rem; color: var(--rich-black);">• ${fact}</li>`).join('')}
+            </ul>
+        </div>
+    </div>
+    <div>
+        <h4 style="color: var(--primary-gold); margin-bottom: 1rem;">Key Treaties & Agreements</h4>
+        <ul style="list-style: none; padding: 0;">
+            ${country.treaties.map(treaty => `<li style="margin-bottom: 0.5rem; color: var(--rich-black);">⭐ ${treaty}</li>`).join('')}
+        </ul>
+    </div>
+    <div class="modal-buttons" style="margin-top: 2rem;">
+        <button class="btn-modal primary" onclick="alert('Embassy services for ${country.name} would be displayed here')">Embassy Services</button>
+        <button class="btn-modal secondary" onclick="alert('Trade information for ${country.name} would be displayed here')">Trade Information</button>
+    </div>
+`;
+
+document.getElementById('countryModalContent').innerHTML = content;
+openModal('countryModal');
+}
+
+// Feature Modal Content
+function openFeatureModal(featureType) {
+const featureData = {
+    'parliamentary': {
+        title: '🏛️ Parliamentary Diplomacy',
+        description: 'India leads global parliamentary cooperation through the Inter-Parliamentary Union and various multilateral forums.',
+        details: [
+            'Inter-Parliamentary Union active participation',
+            'BRICS Parliamentary Forum leadership',
+            'Commonwealth Parliamentary Association',
+            'G20 Parliamentary Speakers Summit',
+            'Democratic values promotion globally'
+        ]
+    },
+    'g20': {
+        title: '🌏 G20 Leadership',
+        description: 'India\'s G20 presidency showcased inclusive growth and sustainable development priorities.',
+        details: [
+            'Successful G20 New Delhi Summit 2023',
+            'Consensus on global economic cooperation',
+            'Digital transformation initiatives',
+            'Climate action and green development',
+            'Global supply chain resilience'
+        ]
+    },
+    'treaty-management': {
+        title: '📋 Treaty Management System',
+        description: 'Advanced digital platform for treaty lifecycle management with blockchain verification.',
+        details: [
+            'Blockchain-based treaty verification',
+            'Multi-language support and translation',
+            'Digital signatures with quantum encryption',
+            'Real-time collaboration tools',
+            'Automated compliance monitoring'
+        ]
+    }
+    // Add more features as needed
+};
+
+const feature = featureData[featureType] || {
+    title: '🌟 Diplomatic Feature',
+    description: 'Advanced diplomatic cooperation tool.',
+    details: ['Digital innovation', 'Global cooperation', 'Secure communications']
+};
+
+const content = `
+    <h3>${feature.title}</h3>
+    <p style="margin-bottom: 2rem; font-size: 1.1rem; color: var(--rich-black);">${feature.description}</p>
+    <h4 style="color: var(--primary-gold); margin-bottom: 1rem;">Key Features</h4>
+    <ul style="list-style: none; padding: 0;">
+        ${feature.details.map(detail => `<li style="margin-bottom: 1rem; color: var(--rich-black); padding-left: 2rem; position: relative;"><span style="position: absolute; left: 0; color: var(--primary-gold);">⭐</span>${detail}</li>`).join('')}
+    </ul>
+    <div class="modal-buttons" style="margin-top: 2rem;">
+        <button class="btn-modal primary" onclick="alert('Feature access would be granted here')">Access Feature</button>
+        <button class="btn-modal secondary" onclick="alert('More information would be displayed here')">Learn More</button>
+    </div>
+`;
+
+document.getElementById('featureModalContent').innerHTML = content;
+openModal('featureModal');
+}
+
+// Treaty Modal Content
+function openTreatyModal(treatyType) {
+const treatyData = {
+    'india-treaties': {
+        title: '🇮🇳 India\'s Key Treaties & Agreements',
+        description: 'Comprehensive overview of India\'s major international treaties and strategic partnerships.',
+        treaties: [
+            {
+                name: 'Indo-US Strategic Partnership',
+                year: '2005-Present',
+                status: 'Active',
+                details: 'Comprehensive partnership covering defense, trade, technology, and energy cooperation.'
+            },
+            {
+                name: 'India-Japan Economic Partnership',
+                year: '2011',
+                status: 'Active',
+                details: 'Bilateral trade agreement promoting economic cooperation and investment flows.'
+            },
+            {
+                name: 'International Solar Alliance',
+                year: '2015',
+                status: 'Founding Member',
+                details: 'India-initiated global alliance for solar energy promotion and deployment.'
+            }
+        ]
+    }
+    // Add more treaty categories as needed
+};
+
+const treaty = treatyData[treatyType] || {
+    title: 'International Treaties',
+    description: 'Overview of international agreements and partnerships.',
+    treaties: []
+};
+
+const content = `
+    <h3>${treaty.title}</h3>
+    <p style="margin-bottom: 2rem; font-size: 1.1rem; color: var(--rich-black);">${treaty.description}</p>
+    <div style="max-height: 400px; overflow-y: auto;">
+        ${treaty.treaties.map(t => `
+            <div style="border: 2px solid var(--primary-gold); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; background: rgba(255,215,0,0.1);">
+                <h4 style="color: var(--primary-gold); margin-bottom: 0.5rem;">${t.name}</h4>
+                <p style="margin-bottom: 0.5rem;"><strong>Year:</strong> ${t.year} | <strong>Status:</strong> ${t.status}</p>
+                <p style="color: var(--rich-black);">${t.details}</p>
+            </div>
+        `).join('')}
+    </div>
+    <div class="modal-buttons" style="margin-top: 2rem;">
+        <button class="btn-modal primary" onclick="alert('Full treaty database would be accessible here')">View All Treaties</button>
+        <button class="btn-modal secondary" onclick="alert('Treaty analysis tools would be available here')">Analyze Treaties</button>
+    </div>
+`;
+
+document.getElementById('treatyModalContent').innerHTML = content;
+openModal('treatyModal');
+}
+
+// Embassy Modal Content
+function openEmbassyModal(country) {
+const embassyData = {
+    'india': {
+        title: '🇮🇳 Embassy of India',
+        missions: '190+ Missions Worldwide',
+        services: [
+            'Visa Services & Fast Track Processing',
+            'Passport Renewal & Emergency Services', 
+            'Consular Support & Citizen Services',
+            'Business Facilitation & Trade Promotion',
+            'Cultural Programs & Educational Exchange'
+        ],
+        locations: [
+            'Washington D.C., USA',
+            'London, United Kingdom',
+            'Tokyo, Japan',
+            'Berlin, Germany',
+            'Moscow, Russia'
+        ]
+    }
+    // Add more embassy data as needed
+};
+
+const embassy = embassyData[country] || {
+    title: 'Embassy Services',
+    missions: 'Global Network',
+    services: ['Consular Services', 'Trade Promotion', 'Cultural Exchange'],
+    locations: ['Major Global Cities']
+};
+
+const content = `
+    <h3>${embassy.title}</h3>
+    <p style="margin-bottom: 2rem; font-size: 1.1rem; color: var(--rich-black);">${embassy.missions}</p>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+        <div>
+            <h4 style="color: var(--primary-gold); margin-bottom: 1rem;">Services Offered</h4>
+            <ul style="list-style: none; padding: 0;">
+                ${embassy.services.map(service => `<li style="margin-bottom: 0.8rem; color: var(--rich-black); padding-left: 2rem; position: relative;"><span style="position: absolute; left: 0; color: var(--primary-gold);">🔸</span>${service}</li>`).join('')}
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: var(--primary-gold); margin-bottom: 1rem;">Key Locations</h4>
+            <ul style="list-style: none; padding: 0;">
+                ${embassy.locations.map(location => `<li style="margin-bottom: 0.8rem; color: var(--rich-black); padding-left: 2rem; position: relative;"><span style="position: absolute; left: 0; color: var(--primary-gold);">📍</span>${location}</li>`).join('')}
+            </ul>
+        </div>
+    </div>
+    
+    <div class="modal-buttons">
+        <button class="btn-modal primary" onclick="alert('Embassy locator would be available here')">Find Embassy</button>
+        <button class="btn-modal secondary" onclick="alert('Emergency contacts would be displayed here')">Emergency Contacts</button>
+    </div>
+`;
+
+document.getElementById('embassyModalContent').innerHTML = content;
+openModal('embassyModal');
+}
+
+// News Modal Content
+function openNewsModal(newsType) {
+const newsData = {
+    'g20-summit': {
+        title: '🇮🇳 India Hosts G20 Summit Successfully',
+        category: 'Summit',
+        date: 'September 2023',
+        content: `
+            <p>India's G20 presidency culminated in a remarkable success with the unanimous adoption of the New Delhi Declaration. The summit brought together world leaders to address critical global challenges including economic recovery, climate action, and digital transformation.</p>
+            
+            <h4 style="color: var(--primary-gold); margin: 1.5rem 0 1rem 0;">Key Achievements:</h4>
+            <ul>
+                <li>Unanimous adoption of New Delhi Declaration</li>
+                <li>Launch of Global Biofuels Alliance</li>
+                <li>Women-led Development initiatives</li>
+                <li>Digital transformation roadmap</li>
+                <li>Sustainable development financing framework</li>
+            </ul>
+            
+            <h4 style="color: var(--primary-gold); margin: 1.5rem 0 1rem 0;">Global Impact:</h4>
+            <p>The summit reinforced India's position as a global leader in multilateral diplomacy and sustainable development. The initiatives launched during the summit are expected to benefit billions of people worldwide.</p>
+        `
+    }
+    // Add more news data as needed
+};
+
+const news = newsData[newsType] || {
+    title: 'Diplomatic News',
+    category: 'News',
+    date: 'Recent',
+    content: '<p>Detailed news content would be displayed here.</p>'
+};
+
+const content = `
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h3>${news.title}</h3>
+        <span style="background: var(--gradient-gold); color: var(--deep-black); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: bold;">${news.category}</span>
+    </div>
+    <p style="color: var(--primary-gold); margin-bottom: 2rem; font-weight: bold;">${news.date}</p>
+    <div style="color: var(--rich-black); line-height: 1.6; max-height: 400px; overflow-y: auto;">
+        ${news.content}
+    </div>
+    <div class="modal-buttons" style="margin-top: 2rem;">
+        <button class="btn-modal primary" onclick="alert('Share functionality would be available here')">Share News</button>
+        <button class="btn-modal secondary" onclick="alert('Related news would be displayed here')">Related News</button>
+    </div>
+`;
+
+document.getElementById('newsModalContent').innerHTML = content;
+openModal('newsModal');
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+const modals = document.querySelectorAll('.modal');
+modals.forEach(modal => {
+    if (event.target === modal) {
+        modal.classList.remove('active');
+    }
+});
+}
+
+// Add smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+        target.scrollIntoView({
+            behavior: 'smooth'
+        });
+    }
+});
+});
+
+// Add intersection observer for animations
+const observerOptions = {
+threshold: 0.1,
+rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+    if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+    }
+});
+}, observerOptions);
+
+// Observe all animated elements
+document.querySelectorAll('.feature-card, .country-card, .treaty-card, .embassy-card, .news-card').forEach(el => {
+observer.observe(el);
+});
+</script>
+</body>
+</html>
